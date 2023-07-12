@@ -11,6 +11,8 @@ export class DashboardComponent implements OnInit {
   newsDataList: any = [];
   apiResponse: any;
   uniqueAuthors: number = 0;
+  uniqueSource: any ;
+  sourceChartData: any;
 
   constructor(private dService: DashboardService) { }
   startAnimationForLineChart(chart){
@@ -149,6 +151,7 @@ export class DashboardComponent implements OnInit {
         // if (this.newsDataList.length > 0){
           
           this.getUniqueAuthor();
+          this.getUniqueSource()
         // }
         var datawebsiteViewsChart = {
           labels: ['Postive', 'Negative', 'Neutral'],
@@ -159,6 +162,7 @@ export class DashboardComponent implements OnInit {
         };
         var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
         this.startAnimationForBarChart(websiteViewsChart);
+        
       })
   }
 
@@ -175,6 +179,21 @@ export class DashboardComponent implements OnInit {
     getUniqueAuthor() {
       let authorsList = this.newsDataList.map(res => res.author);
       this.uniqueAuthors = [...new Set(authorsList)].length;
+    }
+
+    getUniqueSource(){
+      let sourceList = this.newsDataList.map(res => res.source.name);
+      this.uniqueSource  =  [...new Set(sourceList)];
+
+      this.sourceChartData = this.uniqueSource.map(res => {
+          return {
+            key: res,
+            value: sourceList.filter(data => data ==res).length
+          }
+      })
+
+      console.log(this.sourceChartData);
+      
     }
 
 

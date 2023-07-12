@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://34.125.19.34:8080/services/"
+  apiUrl: "http://34.125.44.126:8080/services/"
   // apiUrl: "http://localhost:8080/services/"
 };

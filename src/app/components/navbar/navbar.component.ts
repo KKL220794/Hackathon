@@ -27,12 +27,13 @@ export class NavbarComponent implements OnInit {
     ngOnInit(){
 
         this.newsForm = this._fb.group({
-            queryString: [''],
+            queryString: ['Deutsche bank'],
             fromDate: [''],
             toDate: [''],
             sortBy: ['']
         })
 
+        this.onSearchNews();
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
