@@ -1,0 +1,8 @@
+.card-header-secondary{
+    background: linear-gradient(60deg, #6c757d, #6c757d);
+}
+
+.bottom-fixed{
+    position: absolute;
+    bottom: 1rem;
+}

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const routes: Routes =[
   {
@@ -33,7 +34,8 @@ const routes: Routes =[
     BrowserModule,
     RouterModule.forRoot(routes,{
        useHash: false
-    })
+    }),
+    MatProgressSpinnerModule
   ],
   exports: [
   ],

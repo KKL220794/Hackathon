@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { DashboardService } from './dashboard.service';
+import { AdminLayoutService } from 'app/layouts/admin-layout/admin-layout.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +14,9 @@ export class DashboardComponent implements OnInit {
   uniqueAuthors: number = 0;
   uniqueSource: any ;
   sourceChartData: any;
+  isLoading: boolean;
 
-  constructor(private dService: DashboardService) { }
+  constructor(private dService: DashboardService, private _adminLayoutSer: AdminLayoutService) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -128,7 +130,7 @@ export class DashboardComponent implements OnInit {
               showGrid: false
           },
           low: 0,
-          high: 100,
+          high: 30,
           chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
           
       };
@@ -144,6 +146,8 @@ export class DashboardComponent implements OnInit {
       ];
       
       //start animation for the Emails Subscription Chart
+
+ 
       
       this.dService.newsArticleSubject.subscribe((res: any) => {    
         this.apiResponse = res;  
@@ -154,14 +158,29 @@ export class DashboardComponent implements OnInit {
           this.getUniqueSource()
         // }
         var datawebsiteViewsChart = {
-          labels: ['Postive', 'Negative', 'Neutral'],
+          labels: ['Positive', 'Negative', 'Neutral'],
           series: [
             [this.getPostiveReviewCount(), this.getNegativeReviewCount(), this.getNeutralReviewCount()]
   
           ]
         };
-        var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        var dataAuthorsCountChart = {
+          labels: this.sourceChartData.map(res => res.key),
+          // labels: ['Postive', 'Negative', 'Neutral'],
+          series: this.sourceChartData.map(res =>  res.value)
+          // [
+
+            // [this.getPostiveReviewCount(), this.getNegativeReviewCount(), this.getNeutralReviewCount()]
+  
+          // ]
+        };
+        console.log(dataAuthorsCountChart);
+        
+        var websiteViewsChart = new Chartist.Pie('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
         this.startAnimationForBarChart(websiteViewsChart);
+        // var authorsCountChart = new Chartist.Bar('#authorsCountChart', dataAuthorsCountChart, optionswebsiteViewsChart, responsiveOptions);
+        // this.startAnimationForBarChart(websiteViewsChart);
+        // this.startAnimationForBarChart(authorsCountChart);
         
       })
   }

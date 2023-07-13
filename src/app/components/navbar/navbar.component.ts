@@ -4,6 +4,7 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import { DashboardService } from 'app/dashboard/dashboard.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AdminLayoutService } from 'app/layouts/admin-layout/admin-layout.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +20,7 @@ export class NavbarComponent implements OnInit {
 
     newsForm: FormGroup
 
-    constructor(location: Location,  private element: ElementRef, private router: Router, private _dashboardService: DashboardService, private _fb: FormBuilder) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private _dashboardService: DashboardService, private _fb: FormBuilder, private _adminLayoutSer: AdminLayoutService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -140,6 +141,8 @@ export class NavbarComponent implements OnInit {
         picker.open();
       }
     onSearchNews(){
+
+        this._adminLayoutSer.isloadingStatus.next(true);
         const data ={
             queryString: this.newsForm.value['queryString'],
             fromDate: this.newsForm.value['fromDate'],
@@ -150,9 +153,11 @@ export class NavbarComponent implements OnInit {
           
         this._dashboardService.getNewsData(data).subscribe((res:any) => {
             console.log(res);
-            if (res.status == 'ok'){
+            // if (res.status == 'ok'){
                 this._dashboardService.newsArticleSubject.next(res)
-            }
+                this._adminLayoutSer.isloadingStatus.next(false);
+
+            // }
         })
     }
 }

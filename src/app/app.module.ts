@@ -8,6 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AppComponent,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DashboardService } from 'app/dashboard/dashboard.service';
+import * as Highcharts from 'highcharts';
 declare const $: any;
 declare interface RouteInfo {
     path: string;
@@ -25,11 +26,99 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
+  apiResponse: any;
+  newsDataList: any;
+  uniqueAuthors: number;
+  uniqueSource: unknown[];
+  sourceChartData: any;
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOptionsPie: Highcharts.Options = {
+    series: [
+      {
+        type: 'pie',
 
-  constructor() { }
+      }
+
+    ]
+  }
+  chartOptionsBar: Highcharts.Options = {
+    series: [
+      {
+        type: 'bar',
+
+      }
+
+    ]
+  }
+
+  constructor(private dService: DashboardService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+
+    this.dService.newsArticleSubject.subscribe((res: any) => {    
+      this.apiResponse = res;  
+      this.newsDataList = res.articles;
+      // if (this.newsDataList.length > 0){
+        
+        this.getUniqueAuthor();
+        this.getUniqueSource()
+      // }
+
+      let pieData = [
+        {
+          name: 'Positive',
+          y: this.getPostiveReviewCount()
+        },
+        {
+          name: 'Negative',
+          y: this.getNegativeReviewCount(),
+        },
+        {
+          name: 'Neutral',
+          y: this.getNeutralReviewCount()
+        }
+      ]
+
+      this.createPieChart(pieData);
+
+      // var datawebsiteViewsChart = {
+      //   labels: ['Positive', 'Negative', 'Neutral'],
+      //   series: [
+      //     [this.getPostiveReviewCount(), this.getNegativeReviewCount(), this.getNeutralReviewCount()]
+
+      //   ]
+      // };
+    })
+  }
+
+  createPieChart(data) {
+    this.chartOptionsPie  = {
+      series: [
+        {
+          type: 'pie',
+          data: data
+        }
+      ],
+      colors: ['#45a249', '#e8413d', '#6c757d'],
+      title: {
+        text: 'SentiMeter'
+      },
+      chart: {
+        width: 200
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions:{
+        pie: {
+          dataLabels: {
+            enabled: false
+        },
+        showInLegend: true
+        }
+      }
+    }
   }
   isMobileMenu() {
       if ($(window).width() > 991) {
@@ -37,4 +126,67 @@ export class SidebarComponent implements OnInit {
       }
       return true;
   };
+
+
+  
+  getPostiveReviewCount(){
+    return this.newsDataList.filter(res => res.analysis.sentiment.toLowerCase() == 'positive').length;
+  }
+  getNegativeReviewCount(){
+    return this.newsDataList.filter(res => res.analysis.sentiment.toLowerCase() == 'negative').length;
+  }
+  getNeutralReviewCount(){
+    return this.newsDataList.filter(res => res.analysis.sentiment.toLowerCase() == 'neutral').length;
+  }
+
+  getUniqueAuthor() {
+    let authorsList = this.newsDataList.map(res => res.author);
+    this.uniqueAuthors = [...new Set(authorsList)].length;
+  }
+
+  getUniqueSource(){
+    let sourceList = this.newsDataList.map(res => res.source.name);
+    this.uniqueSource  =  [...new Set(sourceList)];
+
+    this.sourceChartData = this.uniqueSource.map(res => {
+        return {
+          name: res,
+          y: sourceList.filter(data => data ==res).length
+        }
+    })
+    this.createBarChart(this.sourceChartData)
+
+   
+
+    console.log(this.sourceChartData);
+    
+  }
+
+  createBarChart(data){
+    this.chartOptionsBar  = {
+      series: [
+        {
+          type: 'bar',
+          data: data
+        }
+      ],
+      title: {
+        text: 'Top Sources'
+      },
+      chart: {
+        width: 250
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions:{
+        bar: {
+          dataLabels: {
+            enabled: false
+        },
+        showInLegend: true
+        }
+      }
+    }
+  }
 }

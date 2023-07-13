@@ -4,6 +4,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
 import { filter, Subscription } from 'rxjs';
+import { AdminLayoutService } from './admin-layout.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -14,8 +15,9 @@ export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  isLoading = false;
 
-  constructor( public location: Location, private router: Router) {}
+  constructor( public location: Location, private router: Router, private _adminLayoutSer: AdminLayoutService) {}
 
   ngOnInit() {
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
@@ -125,6 +127,11 @@ export class AdminLayoutComponent implements OnInit {
               $sidebar_responsive.css('background-image','url("' + new_image + '")');
           }
       });
+
+
+      this._adminLayoutSer.isloadingStatus.subscribe(res => {
+        this.isLoading = res;
+      })
   }
   ngAfterViewInit() {
       this.runOnRouteChange();

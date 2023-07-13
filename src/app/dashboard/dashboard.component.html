@@ -1,6 +1,4 @@
-<!-- <div class="loader">
-    <mat-spinner></mat-spinner>
-</div> -->
+
 <div class="main-content">
   <div class="container-fluid">
       <div class="row">
@@ -11,7 +9,7 @@
                           <i class="material-icons">content_copy</i>
                       </div>
                       <p class="card-category">Total Mentions</p>
-                      <h3 class="card-title">{{apiResponse.totalResults}}
+                      <h3 class="card-title">{{apiResponse.totalArticles}}
                           <!-- <small>K</small> -->
                       </h3>
                   </div>
@@ -74,24 +72,25 @@
       <div class="row">
           <div class="col-md-4" *ngFor="let article of newsDataList">
               <div class="card card-chart " style=" height: 560px;">
-                  <div class="card-header card-header-success">
+                  <div class="card-header  " [ngClass]="{'card-header-success': article.analysis.sentiment == 'Positive','card-header-danger': article.analysis.sentiment == 'Negative','card-header-secondary': article.analysis.sentiment == 'Neutral'}">
                       <!-- <div class="ct-chart" id="dailySalesChart"></div> -->
-                      <img class="mw-100" style="height: 200px;" [src]="article.urlToImage" alt="" srcset="">
+                      <img class="mw-100" style="height: 200px;" [src]="article.image" alt="" srcset="">
                   </div>
                   <div class="card-body">
-                      <h4 class="card-title bold">{{article.title}}</h4>
+                      <h4 class="card-title bold" style="font-weight: bold;">
+                        <a [href]="article.url" target="_blank">{{article.title}}</a>
+                        </h4>
                       <p>{{article.description| truncate}}</p>
-                      <a [href]="article.url" target="_blank">Link to news</a>
-                      <p *ngIf="article.analysis.sentiment" class="card-category d-flex align-items-center">
-                         People's sentiment:  
-                         <span *ngIf="article.analysis.sentiment == 'Positive'" class="text-success"><i class="fa fa-face-smile display-4 ml-4"  ></i> </span>
-                         <span *ngIf="article.analysis.sentiment == 'Negative'" class="text-danger"><i class="fa fa-face-frown display-4 ml-4"  ></i> </span>
-                         <span *ngIf="article.analysis.sentiment == 'Neutral'" class="text-secondary"><i class="fa fa-face-meh display-4 ml-4"  ></i> </span>
+                      <p *ngIf="article.analysis.sentiment" class="card-category d-flex align-items-center bottom-fixed">
+                         <span style="font-weight: bold;">Sentiment:</span>   
+                         <span *ngIf="article.analysis.sentiment == 'Positive'" class="text-success"><i class="fa fa-face-smile  ml-4" style="font-size: 50px;" matTooltip="Positive"  ></i> </span>
+                         <span *ngIf="article.analysis.sentiment == 'Negative'" class="text-danger"><i class="fa fa-face-frown  ml-4" style="font-size: 50px;" matTooltip="Negative" ></i> </span>
+                         <span *ngIf="article.analysis.sentiment == 'Neutral'" class="text-secondary"><i class="fa fa-face-meh  ml-4" style="font-size: 50px;" matTooltip="Neutral" ></i> </span>
                          </p>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <i class="material-icons">access_time</i> Published on {{article.publishedAt | date}} by {{article.author}}
+                          <i class="material-icons">access_time</i> Published on {{article.publishedAt | date}} by {{article.source.name}}
                       </div>
                   </div>
               </div>

@@ -1,3 +1,9 @@
+<div class="loader" *ngIf="isLoading">
+    <div class="alignment">
+
+        <mat-spinner [diameter]="40" color="primary"></mat-spinner>
+    </div>
+</div>
 <div class="wrapper">
     <div class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
         <app-sidebar></app-sidebar>

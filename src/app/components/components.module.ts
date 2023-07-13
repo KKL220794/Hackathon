@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatNativeDateModule,
     MatDatepickerModule,
     MatSelectModule,
+    HighchartsChartModule
   ],
   declarations: [
     FooterComponent,

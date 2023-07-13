@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-wrapper w-100 ml-5">
             <!-- <a class="navbar-brand" href="javascript:void(0)">{{getTitle()}}</a> -->
-            <form class="w-100 d-flex align-items-center" [formGroup]="newsForm">
+            <form class="w-100 d-flex align-items-center mt-3" [formGroup]="newsForm">
                 <!-- <mat-form-field class="w-100" appearance="outline" >
               <mat-label>Search through mentions, authors & domains</mat-label>
               <mat-icon matPrefix>search</mat-icon>
@@ -65,7 +65,7 @@
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Sort By:</mat-label>
                             <mat-select formControlName="sortBy">    
-                                <mat-option value="popularity"> Popularity </mat-option>
+                                <mat-option value="relevance"> Relevance </mat-option>
                                 <mat-option value="publishedAt"> Published At </mat-option>
                             </mat-select>
                         </mat-form-field>

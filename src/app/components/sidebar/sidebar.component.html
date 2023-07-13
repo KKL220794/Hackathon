@@ -1,12 +1,28 @@
 <div class="logo">
     <a href="#" class="simple-text">
-Clientment
+        <img class="ml-4" width="200px" src="assets/img/cna-logo.png" alt="" srcset="">
     </a>
 </div>
 <div class="sidebar-wrapper">
-    <div class="card card-chart">
-        <div class="card-header card-header-warning">
-            <div class="ct-chart" id="websiteViewsChart"></div>
+    <div class="">
+        <!-- <div class="card-header"> -->
+            <!-- <div class="ct-chart" id="websiteViewsChart"></div> -->
+            <highcharts-chart *ngIf="newsDataList.length > 0"
+            [Highcharts]="Highcharts"
+          
+            [options]="chartOptionsPie"
+          
+          ></highcharts-chart>     
+
+          <highcharts-chart *ngIf="newsDataList.length > 0"
+            [Highcharts]="Highcharts"
+          
+            [options]="chartOptionsBar"
+          
+          ></highcharts-chart>  
+        <!-- </div> -->
+        <div class="card-header">
+            <!-- <div class="ct-chart" id="authorsCountChart"></div> -->
         </div>
     </div>
 
