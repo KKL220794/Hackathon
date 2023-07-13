@@ -6,3 +6,10 @@
     position: absolute;
     bottom: 1rem;
 }
+.card-category{
+    font-size: 20px !important;
+    font-weight: bold;
+}
+.card-title{
+    font-weight: bold;
+}
