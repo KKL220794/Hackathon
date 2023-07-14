@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit {
             queryString: ['Deutsche bank'],
             fromDate: [''],
             toDate: [''],
-            sortBy: ['']
+            sortBy: ['relevance']
         })
 
         this.onSearchNews();

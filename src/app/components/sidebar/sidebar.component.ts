@@ -170,6 +170,19 @@ export class SidebarComponent implements OnInit {
           data: data
         }
       ],
+      xAxis: {
+
+        labels: {
+            enabled: true
+        }
+    },
+      yAxis: {
+
+        labels: {
+            enabled: true
+        }
+    },
+
       title: {
         text: 'Top Sources'
       },
@@ -184,7 +197,7 @@ export class SidebarComponent implements OnInit {
           dataLabels: {
             enabled: false
         },
-        showInLegend: true
+        showInLegend: false
         }
       }
     }
